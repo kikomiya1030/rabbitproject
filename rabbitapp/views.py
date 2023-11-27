@@ -33,8 +33,8 @@ class ContactView(FormView):
         message = \
             '送信者名：{0}\nメールアドレス：{1}\nタイトル：{2}\nメッセージ：\n{3}'\
                 .format(name, email, title, message)
-        from_email = 'ykh2335042@stu.o-hara.ac.jp'
-        to_list = ['ykh2335042@stu.o-hara.ac.jp']
+        from_email = 'abc@example.com'
+        to_list = ['abc@example.com']
         message = EmailMessage(subject=subject, body=message, from_email=from_email, to=to_list,)
         message.send()
         messages.success(self.request, 'お問い合わせは正常に送信しましたよ！')
