@@ -1,0 +1,55 @@
+{% load static %}
+
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>{% block title %}{% endblock %}</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href={% static 'assets/favicon.ico' %} />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+
+    <!--背景設定-->
+    <!--画面サイズ: 1920x1080-->
+    <style>
+        #bg{
+            background-image: url("{% static 'assets/img/rabbit_background3.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed;
+        }
+    </style>
+    <body id="bg">
+        <!-- Page Content-->
+            {% block contents %}{% endblock contents %}
+        
+        <!-- Navi -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+                <div class="container px-4 px-lg-5">
+                    <a class="navbar-brand" href="#!">RRRRRabbit!</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'rabbitapp:index' %}">Home</a></li>
+                            {% if user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+                            {% endif %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'adventure:adventure' %}">Advence</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'rabbitapp:shop' %}">Shop</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'rabbitapp:contact' %}">Contact</a></li>                        
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+    </body>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>    
+        
+</html>

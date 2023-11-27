@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}RRRRRabbit! - Cart{% endblock %}
+
+{% block contents %}
+
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        background-color: rgba(255, 255, 255, 0.8); /* Set your desired background color */
+    }
+
+    .cart-container {
+        border: 2px solid black;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        max-width: 600px; /* Set your desired max-width */
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+
+
+  <!--fuction of stock adjust-->
+  <script>
+    function goToRecord(cartId) {
+      var quantity = parseInt('{{ record.qty }}');
+        // Send an AJAX request to the add_to_cart endpoint
+        $.ajax({
+            type: 'POST',
+            url: '/go_to_record/',
+            data: {
+                'cart_id': cartId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            dataType: 'json',
+            success: function(response) {
+                alert(response.message);  // Display a success message
+                window.location.href = '{% url 'rabbitapp:record' %}';
+            },
+            error: function(response) {
+                alert('Error buying.');  // Display an error message
+            }
+        });
+    }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+<div class="cart-container" style ="padding: 20px">
+    <h2>カート</h2>
+    <a>{{username}}さんのカートです。
+    <table>
+        <thead>
+            <tr>
+                <th>アイテム</th>
+                <th>単価</th>
+                <th>数量</th>
+                <th>値段</th>
+                <th>購入</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in cart_items %}
+                <tr>
+                    <td>{{ record.title }}</td>
+                    <td>{{ record.price }}</td>
+                    <td>{{ record.qty }}</td>
+                    <td>{{ record.amount }}</td>
+                    <td><button type="button" class="btn btn-sm btn-outline-secondary" onclick="goToRecord('{{ record.id }}')">購入</button></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Total amount: {{total_amount}}</p>
+    <br><br>
+    <p><a href="{% url 'rabbitapp:shop' %}">戻る</a><p>
+    <br>
+    <br>
+</div>
+{% endblock contents %}

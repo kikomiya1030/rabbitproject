@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}RRRRRabbit! - Question{% endblock %}
+{% block contents %}
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        background-color: rgba(255, 255, 255, 0.8); /* Set your desired background color */
+    }
+
+    .cart-container {
+        border: 2px solid black;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        max-width: 600px; /* Set your desired max-width */
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+
+<div class="cart-container">
+    <h2>問題です！</h2>
+        <br>
+        <p>{{ random_index.title }}</p>
+        <p>{{ random_index.content }}</p>
+        <br>
+        <a href="{% url 'adventure:answer' %}?record_id={{ random_index.id }}" class="btn btn-primary">答えを見る⇒ </a>
+        <br>
+        <br>
+        <p><a href="{% url 'adventure:adventure' %}">戻る</a><p>
+</div>
+<br>
+<br>
+{% endblock %}

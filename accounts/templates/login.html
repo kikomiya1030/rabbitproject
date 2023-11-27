@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}RRRRRabbit - login{% endblock %}
+
+    {% block contents %}
+    <main class="mb-4">
+      <div class="container px-4 px-lg-5">
+          <div class="row gx-4 gx-lg-5 justify-content-center">
+              <div class="col-md-10 col-lg-8 col-xl-7">
+                {% if form.errors %}
+                  <p style="color: red">ユーザー名とパスワードが一致しません。</p>
+                {% endif %}
+                
+                <form method="post">
+                  {% csrf_token %}
+                  <br>
+                  <h1 class="h3 mb-3 fw-normal">ログインなう！</h1>
+                  <a>Login now!</a>
+                  <br><br>
+                  
+                  <ul class="list-unstyled" style="list-style: none;">
+                    <label for="Username" class="visually-hidden">User name</label>
+
+                    <input type="text" name="username" id="id_username" maxlength="150" autocapitalize="none" autocomplete="username" class="form-control" placeholder="ユーザー名" required autofocus>
+                    <label for="Password" class="visually-hidden">Password</label>
+
+                    <input type="password" name="password" id="id_password" autocomplete="current-password" class="form-control" placeholder="パスワード" required autofocus>
+                    <input class="w-100 btn btn-lg btn-primary" type="submit" value="ログイン">
+                  </ul>
+                  <br><br>
+
+                  <p><a href="{% url 'password_reset' %}">パスワードを忘れましたか？</a></p>
+                  <input type="hidden" name="next" value="{% url 'rabbitapp:index' %}">
+                </form>
+    </main>
+    {% endblock %}

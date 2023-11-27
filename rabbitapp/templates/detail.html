@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}RRRRRabbit! - items detail{% endblock %}
+
+    {% block contents %}
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col offset-3">
+                <h2>{{ object.title }}</h2>
+                <p>{{ object.comment }}</p>
+                <br>
+                <p><img src="{{object.image1.url}}"></img></p>
+
+                {% if object.image2 %}
+                    <p><img src="{{object.image2.url}}"></img></p>
+                {% endif %}
+
+                <a href="{% url 'rabbitapp:shop' %}">戻る</a>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

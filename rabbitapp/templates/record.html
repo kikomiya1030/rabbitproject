@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}RRRRRabbit! - Record{% endblock %}
+
+{% block contents %}
+
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        background-color: rgba(255, 255, 255, 0.8); /* Set your desired background color */
+    }
+
+    .cart-container {
+        border: 2px solid black;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        max-width: 600px; /* Set your desired max-width */
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+
+<div class="cart-container" style ="padding: 20px">
+    <h2>購入履歴</h2>
+    <a>{{username}}さんの今までの購入履歴です。
+    <table>
+        <thead>
+            <tr>
+                <th>購入日</th>
+                <th>アイテム</th>
+                <th>単価</th>
+                <th>数量</th>
+                <th>値段</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in record_items %}
+                <tr>
+                    <td>{{ record.buying_date}}
+                    <td>{{ record.title }}</td>
+                    <td>{{ record.price }}</td>
+                    <td>{{ record.qty }}</td>
+                    <td>{{ record.amount }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <p><a href="{% url 'rabbitapp:cart' %}">戻る</a><p>
+    <br>
+    <br>
+</div>
+{% endblock contents %}

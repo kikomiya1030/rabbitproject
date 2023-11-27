@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}RRRRRabbit! - Shop{% endblock %}
+
+{% block contents %}
+
+  {% if user.is_authenticated %}
+    {% include "shop_itemlist.html" %}
+    <br>
+    {% include "pagination.html" %}
+    <br><br>
+  {% else %}
+    <div style ="padding: 20px"><center>
+      <p>ショップ機能を使用する方は、下記の事前のログイン、又はサインアップしてください。</p>
+      <a href="{% url 'accounts:signup' %}" class="btn btn-primary my-2">Sign UP!</a>
+      <a href="{% url 'accounts:login' %}" class="btn btn-secondary my-2">Login!</a>
+    </center></div>
+  {% endif %}
+
+{% endblock %}

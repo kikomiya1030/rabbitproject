@@ -1,0 +1,75 @@
+{% load static %}
+<!--shop contents-->
+  <div style ="padding-left: 20px">
+    <br>
+    <h2>ショップ</h2>
+    <a>こちらで必要のアイテムを購入できます。</a>
+    <br>
+    <a>You can buy something you need here. </a>
+    <br><br>
+    <a><img src="{% static 'assets/img/cart.png' %}" width="30" height="30"></img></a>
+    <a href="{% url 'rabbitapp:cart' %}">カートチェック！</a>
+    <br>
+    <a><img src="{% static 'assets/img/cart.png' %}" width="30" height="30"></img></a>
+    <a href="{% url 'rabbitapp:record' %}">購入履歴確認！</a>
+      <br>
+  </div>
+
+  <!--fuction of stock adjust-->
+  <script>
+    function addToCart(rabbitPostId) {
+      var quantity = parseInt('{{ record.qty }}');
+        if (quantity <= 0) {
+            alert('Item is out of stock.');  // Display an error message
+            return;
+        }
+
+        // Send an AJAX request to the add_to_cart endpoint
+        $.ajax({
+            type: 'POST',
+            url: '/add_to_cart/',
+            data: {
+                'rabbit_post_id': rabbitPostId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            dataType: 'json',
+            success: function(response) {
+                alert(response.message);  // Display a success message
+                if (response.instock){
+                  window.location.href = '{% url 'rabbitapp:cart' %}';
+                }
+            },
+            error: function(response) {
+                alert('Error adding item to cart.');  // Display an error message
+            }
+        });
+    }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!--item list-->
+  <div style ="padding-left: 20px">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        {% for record in object_list %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="{{ record.image1.url }}" class="bd-placeholder-img card-img-top" width="30" height="50%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <rect width="100%" height="100%" fill="#55595c"/>
+            </img>
+            <div class="card-body">
+              <p class="card-text">{{record.title}}</p>
+              <p class="card-text" align="right">数量：{{record.qty}}　値段：{{record.price}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'rabbitapp:detail' record.pk %}'">詳細確認</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addToCart('{{ record.id }}')">カードに入れる</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
